@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <button id="logout-btn" class="logout-btn">Logout</button>
+        </header>
+        
+        <div class="login-section" id="login-section">
+            <h2>Admin Login</h2>
+            <input type="password" id="admin-pin" placeholder="Enter 4-digit PIN" maxlength="4" pattern="\d{4}">
+            <button id="admin-login-btn">Login</button>
+            <p id="login-error" class="error-message"></p>
+        </div>
+        
+        <div class="dashboard" id="admin-dashboard">
+            <div class="section">
+                <h2>Staff Management</h2>
+                <div class="form-group">
+                    <input type="text" id="staff-name" placeholder="Staff Name">
+                    <input type="password" id="staff-pin" placeholder="4-digit PIN" maxlength="4" pattern="\d{4}">
+                    <button id="add-staff-btn">Add Staff</button>
+                </div>
+                <div class="staff-list" id="staff-list">
+                    <!-- Staff list will be populated here -->
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Task Assignment</h2>
+                <div class="form-group">
+                    <select id="staff-select">
+                        <!-- Staff options will be populated here -->
+                    </select>
+                    <input type="text" id="task-desc" placeholder="Task Description">
+                    <button id="assign-task-btn">Assign Task</button>
+                </div>
+                <div class="task-list" id="admin-task-list">
+                    <!-- Task list will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

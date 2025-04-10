@@ -1,0 +1,232 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2980b9;
+    --accent-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+    --success-color: #2ecc71;
+    --warning-color: #f39c12;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+
+.role-selection {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.role-btn {
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.role-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.login-section {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-section input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.login-section button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-section button:hover {
+    background-color: var(--secondary-color);
+}
+
+.error-message {
+    color: var(--accent-color);
+    margin-top: 10px;
+    text-align: center;
+}
+
+.dashboard {
+    display: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.logout-btn {
+    padding: 8px 15px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}
+
+.section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-group input, .form-group select {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group button {
+    padding: 10px 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-group button:hover {
+    background-color: var(--secondary-color);
+}
+
+.staff-list, .task-list, .history-list {
+    display: grid;
+    gap: 15px;
+}
+
+.staff-card, .task-card {
+    padding: 15px;
+    background-color: var(--light-color);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.staff-card button, .task-card button {
+    padding: 5px 10px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.task-status {
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.status-not-started {
+    background-color: #bdc3c7;
+    color: #333;
+}
+
+.status-ongoing {
+    background-color: var(--warning-color);
+    color: white;
+}
+
+.status-completed {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.history-item {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-left: 4px solid var(--primary-color);
+    margin-bottom: 10px;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .role-selection {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .form-group {
+        flex-direction: column;
+    }
+    
+    .staff-card, .task-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .task-card-actions {
+        align-self: flex-end;
+    }
+}
