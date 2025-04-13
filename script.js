@@ -25,6 +25,83 @@ function navigateTo(page) {
     window.location.href = page;
 }
 
+// PDF Report Generation
+function generateStaffTaskReport(staffId, staffName) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Add title
+    doc.setFontSize(18);
+    doc.text(`Task Report for ${staffName}`, 14, 20);
+    
+    doc.setFontSize(12);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+    
+    // Get task data
+    const taskData = JSON.parse(localStorage.getItem('taskData'));
+    const staffTasks = taskData.filter(task => task.staffId === staffId);
+    
+    if (staffTasks.length === 0) {
+        doc.text('No tasks found for this staff member.', 14, 40);
+        doc.save(`${staffName}_Task_Report.pdf`);
+        return;
+    }
+    
+    // Prepare data for the table
+    const tableData = staffTasks.map(task => {
+        return [
+            task.description,
+            task.status.charAt(0).toUpperCase() + task.status.slice(1),
+            new Date(task.createdAt).toLocaleDateString(),
+            task.history ? task.history.length : 0
+        ];
+    });
+    
+    // Add table
+    doc.autoTable({
+        head: [['Task Description', 'Status', 'Created Date', 'Updates']],
+        body: tableData,
+        startY: 40,
+        styles: {
+            cellPadding: 5,
+            fontSize: 10,
+            valign: 'middle'
+        },
+        headStyles: {
+            fillColor: [52, 152, 219],
+            textColor: 255,
+            fontStyle: 'bold'
+        },
+        alternateRowStyles: {
+            fillColor: [236, 240, 241]
+        },
+        columnStyles: {
+            0: { cellWidth: 'auto' },
+            1: { cellWidth: 'auto' },
+            2: { cellWidth: 'auto' },
+            3: { cellWidth: 'auto' }
+        }
+    });
+    
+    // Add summary
+    const completedTasks = staffTasks.filter(task => task.status === 'completed').length;
+    const ongoingTasks = staffTasks.filter(task => task.status === 'ongoing').length;
+    const notStartedTasks = staffTasks.filter(task => task.status === 'not started').length;
+    
+    const finalY = doc.lastAutoTable.finalY + 10;
+    doc.setFontSize(12);
+    doc.text('Task Summary:', 14, finalY);
+    
+    doc.setFontSize(10);
+    doc.text(`Total Tasks: ${staffTasks.length}`, 14, finalY + 10);
+    doc.text(`Completed: ${completedTasks}`, 14, finalY + 20);
+    doc.text(`Ongoing: ${ongoingTasks}`, 14, finalY + 30);
+    doc.text(`Not Started: ${notStartedTasks}`, 14, finalY + 40);
+    
+    // Save the PDF
+    doc.save(`${staffName}_Task_Report.pdf`);
+}
+
 // Admin functions
 function handleAdminLogin() {
     const pinInput = document.getElementById('admin-pin');
@@ -58,7 +135,10 @@ function loadStaffList() {
         const staffCard = document.createElement('div');
         staffCard.className = 'staff-card';
         staffCard.innerHTML = `
-            <span>${staff.name} (PIN: ${staff.pin})</span>
+            <div class="staff-info">
+                <span>${staff.name} (PIN: ${staff.pin})</span>
+                <button class="report-staff-btn" data-id="${staff.id}" data-name="${staff.name}">Download Report</button>
+            </div>
             <button class="remove-staff-btn" data-id="${staff.id}">Remove</button>
         `;
         staffListElement.appendChild(staffCard);
@@ -69,6 +149,15 @@ function loadStaffList() {
         button.addEventListener('click', (e) => {
             const staffId = e.target.getAttribute('data-id');
             removeStaff(staffId);
+        });
+    });
+    
+    // Add event listeners to report buttons
+    document.querySelectorAll('.report-staff-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const staffId = e.target.getAttribute('data-id');
+            const staffName = e.target.getAttribute('data-name');
+            generateStaffTaskReport(staffId, staffName);
         });
     });
 }
@@ -207,6 +296,19 @@ function handleStaffLogin() {
         
         // Set greeting with staff name
         document.getElementById('staff-greeting').textContent = `Welcome ${staff.name}`;
+        
+        // Add report button
+        const header = document.querySelector('header');
+        if (!document.getElementById('download-report-btn')) {
+            const reportBtn = document.createElement('button');
+            reportBtn.id = 'download-report-btn';
+            reportBtn.className = 'report-btn';
+            reportBtn.textContent = 'Download Report';
+            reportBtn.addEventListener('click', () => {
+                generateStaffTaskReport(staff.id, staff.name);
+            });
+            header.insertBefore(reportBtn, document.getElementById('staff-logout-btn'));
+        }
         
         // Store current staff in session
         sessionStorage.setItem('currentStaff', JSON.stringify(staff));
