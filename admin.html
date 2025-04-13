@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <header>
-            <h1>Admin Dashboard</h1>
+            <h1>Welcome Admin</h1>
             <button id="logout-btn" class="logout-btn">Logout</button>
         </header>
-        
+
         <div class="login-section" id="login-section">
             <h2>Admin Login</h2>
             <input type="password" id="admin-pin" placeholder="Enter 4-digit PIN" maxlength="4" pattern="\d{4}">
             <button id="admin-login-btn">Login</button>
             <p id="login-error" class="error-message"></p>
         </div>
-        
+
         <div class="dashboard" id="admin-dashboard">
             <div class="section">
                 <h2>Staff Management</h2>
@@ -32,9 +34,9 @@
                     <!-- Staff list will be populated here -->
                 </div>
             </div>
-            
+
             <div class="section">
-                <h2>Task Assignment</h2>
+                <h2>Task Management</h2>
                 <div class="form-group">
                     <select id="staff-select">
                         <!-- Staff options will be populated here -->
@@ -48,6 +50,9 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
